@@ -4,7 +4,12 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
+
+// allow one or more site addresses, separated by commas; trailing slashes are ignored
+const origins = (process.env.CLIENT_URL || 'http://localhost:5173')
+  .split(',')
+  .map((s) => s.trim().replace(/\/$/, ''));
+app.use(cors({ origin: origins }));
 app.use(express.json());
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
