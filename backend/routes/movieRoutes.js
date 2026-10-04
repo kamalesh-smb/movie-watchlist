@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const wrap = require('../middleware/asyncHandler');
+const auth = require('../middleware/authMiddleware');
+const c = require('../controllers/movieController');
+router.get('/', wrap(c.getMovies));
+router.get('/:id', wrap(c.getMovie));
+router.post('/', auth, wrap(c.createMovie));
+router.put('/:id', auth, wrap(c.updateMovie));
+router.delete('/:id', auth, wrap(c.deleteMovie));
+module.exports = router;

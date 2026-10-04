@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const wrap = require('../middleware/asyncHandler');
+const auth = require('../middleware/authMiddleware');
+const c = require('../controllers/watchlistController');
+router.use(auth);
+router.get('/', wrap(c.getWatchlist));
+router.post('/', wrap(c.addToWatchlist));
+router.put('/:id', wrap(c.updateStatus));
+router.delete('/:id', wrap(c.removeFromWatchlist));
+module.exports = router;
